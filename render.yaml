@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: pnl-dashboard
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DATABASE_URL
+        value: "file:./dev.db"
+      - key: JWT_SECRET
+        sync: false

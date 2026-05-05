@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design Tokens ── */
+:root {
+  --bg: #030508;
+  --surface-1: #08090f;
+  --surface-2: #0c0f1a;
+  --border: rgba(16, 185, 129, 0.12);
+  --border-hover: rgba(16, 185, 129, 0.28);
+  --accent: #10b981;
+  --accent-bright: #34d399;
+  --accent-dim: rgba(16, 185, 129, 0.08);
+  --text-primary: #e2e8f0;
+  --text-muted: #475569;
+  --positive: #10b981;
+  --negative: #f43f5e;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% -5%, rgba(16, 185, 129, 0.055) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(16, 185, 129, 0.025) 0%, transparent 100%);
+  color: var(--text-primary);
+  font-family: var(--font-inter, "Segoe UI", system-ui, -apple-system, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ── */
+* { scrollbar-width: thin; scrollbar-color: #1a3028 #08090f; }
+*::-webkit-scrollbar { width: 5px; height: 5px; }
+*::-webkit-scrollbar-track { background: #08090f; }
+*::-webkit-scrollbar-thumb { background: #1a3028; border-radius: 999px; }
+*::-webkit-scrollbar-thumb:hover { background: #14532d; }
+
+/* ── Input resets ── */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+input[type="date"], input[type="month"] { color-scheme: dark; }
+
+/* ── Keyframes ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  50%       { box-shadow: 0 0 20px 4px rgba(16, 185, 129, 0.18); }
+}
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes borderPulse {
+  0%, 100% { border-color: rgba(16, 185, 129, 0.18); }
+  50%       { border-color: rgba(16, 185, 129, 0.45); }
+}
+
+/* ── Animation helpers ── */
+.anim-fade-up    { animation: fadeUp   0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-fade-in    { animation: fadeIn   0.22s ease both; }
+.anim-scale-in   { animation: scaleIn  0.3s  cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-slide-down { animation: slideDown 0.2s ease both; }
+.anim-spin       { animation: spin     0.75s linear infinite; }
+.anim-pulse-glow { animation: pulseGlow 2.2s ease-in-out infinite; }
+
+/* Staggered entrance for sibling cards */
+.stagger > *:nth-child(1) { animation-delay:   0ms; }
+.stagger > *:nth-child(2) { animation-delay:  55ms; }
+.stagger > *:nth-child(3) { animation-delay: 110ms; }
+.stagger > *:nth-child(4) { animation-delay: 165ms; }
+.stagger > *:nth-child(5) { animation-delay: 220ms; }
+.stagger > *:nth-child(6) { animation-delay: 275ms; }
+.stagger > *:nth-child(7) { animation-delay: 330ms; }
+
+/* Skeleton loading shimmer */
+.skeleton {
+  background: linear-gradient(90deg, #0c0f1a 25%, #131b28 50%, #0c0f1a 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 10px;
+}
+
+/* ── Component: Panel ── */
+.panel {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.panel-hover:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.06) inset;
+}
+
+/* ── Component: Input ── */
+.input-base {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.input-base::placeholder { color: #2d3f52; }
+.input-base:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* ── Component: Primary Button ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #000;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-bright);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 28px rgba(16, 185, 129, 0.32);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0px);
+  box-shadow: none;
+}
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Component: Ghost Button ── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  color: #64748b;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.08); color: #e2e8f0; border-color: rgba(255,255,255,0.1); }
+
+/* ── Heatmap cells ── */
+.heat-zero  { background: #090c14; }
+.heat-pos-1 { background: rgba(16, 185, 129, 0.22); }
+.heat-pos-2 { background: rgba(16, 185, 129, 0.48); }
+.heat-pos-3 { background: rgba(16, 185, 129, 0.75); }
+.heat-neg-1 { background: rgba(244,  63,  94, 0.22); }
+.heat-neg-2 { background: rgba(244,  63,  94, 0.48); }
+.heat-neg-3 { background: rgba(244,  63,  94, 0.75); }
+
+.heat-cell {
+  cursor: pointer;
+  transition:
+    transform    0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter       0.15s ease,
+    box-shadow   0.15s ease;
+  position: relative;
+}
+.heat-cell:hover {
+  transform: scale(1.1);
+  filter: brightness(1.22);
+  z-index: 20;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+}
+
+/* Selected day ring */
+.heat-cell-selected {
+  box-shadow: 0 0 0 2px #34d399, 0 4px 18px rgba(52, 211, 153, 0.25) !important;
+  z-index: 30;
+}
+
+/* ── Utility: PnL colour ── */
+.pnl-pos { color: var(--positive); }
+.pnl-neg { color: var(--negative); }
+.pnl-zero { color: var(--text-muted); }
+
+/* ── Tabular numbers for financial data ── */
+.tabnum { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+/* ── Nav blur ── */
+.nav-blur {
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
